@@ -37,6 +37,12 @@ body {
     color: white; /* Ensure text is readable */
 }
 
+.highlight-about {
+    background-color: #0cf46c; /* Green background */
+    padding: 7px 40px; /* Add padding for better appearance */
+    color: white; /* Ensure text is readable */
+}
+
 
 /* Navigation */
 nav {
@@ -100,7 +106,8 @@ nav ul li a:hover::after {
 }
 
 nav.scrolled .logo a,
-nav.scrolled ul li a {
+nav.scrolled ul li a,
+nav.scrolled .dropdown-toggle {
     color: black;
 }
 
@@ -108,11 +115,79 @@ nav.scrolled ul li a::after {
     background-color: #0cf46c;
 }
 
+nav.scrolled .dropdown-toggle::after {
+    background-color: #0cf46c; /* Keep the underline consistent */
+}
+/* Dropdown Container */
+.dropdown {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.dropdown .dropdown-toggle {
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 14px;
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+}
+
+.dropdown .dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: #1d1d27;
+    color: white;
+    padding: 10px 25px 0;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    list-style: none;
+    min-width: 120px;
+}
+
+.dropdown .dropdown-menu li {
+    text-align: center;
+    padding-left: 25px;
+}
+
+.dropdown .dropdown-menu li a {
+    color: white;
+    padding: 10px 5px;
+    margin-bottom: 10px;
+    display: block;
+    text-decoration: none;
+    font-size: 14px;
+    transition: background 0.3s ease-in-out;
+}
+
+
+/* Show the dropdown on hover or click */
+.dropdown:hover .dropdown-menu,
+.dropdown.active .dropdown-menu {
+    display: block;
+}
+
+/* Avatar Styles */
+.user-avatar {
+    width: 40px; /* Restrict size */
+    height: 40px; /* Make it square */
+    border-radius: 50%; /* Make it circular */
+    object-fit: cover; /* Ensure the image scales properly */
+    margin-right: 10px; /* Space between avatar and username */
+    vertical-align: middle; /* Align with text */
+    border: 2px solid #0cf46c; /* Optional: Add a border for better appearance */
+}
+
+
 .logo {
     float: left;
     padding: 8px;
     margin-left: 16px;
-    margin-top: 8px;
+    margin-top: 15px;
 }
 
 .logo img {
@@ -123,7 +198,7 @@ nav.scrolled ul li a::after {
 
 /* What We Offer Section */
 .what-we-offer {
-    background-color: #1e1e1e;
+    background-color: #1d1d27;
     padding: 60px 20px;
     text-align: center;
     color: white;
@@ -166,7 +241,7 @@ nav.scrolled ul li a::after {
 .offer-item:hover {
     background: #393939;
     transform: translateY(-10px);
-    box-shadow: 0 8px 15px #0cf46c;
+    box-shadow: 0 8px 15px #03411d;
 }
 
 .offer-item i {
@@ -187,6 +262,261 @@ nav.scrolled ul li a::after {
     color: #b9b9b9;
     line-height: 1.5;
 }
+
+/* About Page Styles */
+
+/* Hero Section */
+.about-hero {
+    background: url('/TrekSmart/assets/image/about-hero.jpg') center/cover no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50vh;
+    color: white;
+    text-align: center;
+}
+
+.about-hero h1 {
+    font-size: 3rem;
+    margin-bottom: 10px;
+}
+
+.about-hero p {
+    font-size: 1.2rem;
+    color: white;
+}
+
+/* About Section */
+.about-section {
+    padding: 10px 20px;
+    margin-left: 130px;
+    margin-right: 130px;
+    margin-bottom: 60px;
+}
+
+.about-header h2 {
+    font-size: 3rem;
+    color: rgb(0, 0, 0);
+    font-weight: 700;
+    position: relative;
+    margin-bottom: 20px;
+    display: inline-block;
+}
+
+.about-header h2::after {
+    content: '';
+    position: absolute;
+    right: 50%; 
+    bottom: -5px; 
+    width: 50%; 
+    height: 4px; /* Thickness of the underline */
+    background-color: #0cf46c; /* Green underline color */
+    transition: width 0.3s ease, right 0.3s ease; /* Smooth animation for hover effect */
+}
+
+.about-header h2:hover::after {
+    width: 100%; /* Expand the underline to cover the full width of the text */
+    right: 0; /* Reset position to align underline with the text */
+}
+
+.about-description {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 30px;
+}
+
+.image-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    
+}
+
+.image-grid img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+/* Stats Section */
+/* Stats Section */
+.stats-section {
+    background-color: #f8f9fa;
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.stats-grid {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+}
+
+.stat-indi {
+    background-color: #0cf46c; /* Green background */
+    padding: 5px 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add subtle shadow */
+}
+
+.stat-indi:hover {
+    transform: scale(1.1); /* Slight zoom */
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* Enhance shadow on hover */
+}
+
+.stat-item h3 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: black;
+    margin: 0;
+}
+
+.stat-item p {
+    font-size: 1rem;
+    color: black; /* Updated text color to stand out */
+    margin-top: 10;
+}
+
+
+/* Founder Section */
+.founder-section {
+    padding: 2px 20px;
+    margin: 130px;
+}
+
+
+.founder-grid {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.founder-content i {
+    font-size: 35px;
+    margin: 10px;
+    color: #333;
+    margin-bottom: 20px;
+    margin-right: 30px;
+}
+
+.founder-content h3 {
+    color: rgb(0, 0, 0);
+    margin-top: 30px;
+    margin-bottom: 5px;
+}
+.founder-content p {
+    color: rgb(147, 147, 147);
+    margin-top: 0px;
+}
+
+.founder-content span {
+    gap: 2px;
+}
+.founder-image img {
+    width: 100%;
+    max-width: 5000px;
+    border-radius: 8px;
+    box-shadow: 0 8px 45px #84ffb7;
+    transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+}
+
+
+.founder-image img:hover {
+    background: #393939;
+    transform: translateY(-10px);
+    box-shadow: 0 8px 15px #84ffb7;
+}
+
+/* Team Section */
+.team-section {
+    padding: 2px 20px;
+    background: #1d1d27;
+}
+
+.team-container{
+    margin-top: 100px;
+    margin-left: 130px;
+    margin-right: 130px;
+    margin-bottom: 100px;
+}
+
+.team-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.team-header h2 {
+    font-size: 3rem;
+    color: white;
+    font-weight: 700;
+    position: relative;
+    margin-bottom: 20px; 
+}
+
+.team-header h2::after {
+    content: '';
+    position: absolute;
+    right: 50%;
+    bottom: 0; 
+    width: 50%;
+    height: 4px;
+    background-color: #0cf46c;
+    transition: width 0.3s ease, right 0.3s ease;
+}
+
+.team-header h2:hover::after {
+    width: 100%;
+    right: 0;
+}
+
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.team-member {
+    text-align: center;
+}
+
+.team-member img {
+    width: 100%;
+    border-radius: 50%;
+    height: auto;
+}
+
+.team-member img {
+    width: 100%;
+    max-width: 5000px;
+    border-radius: 8px;
+    box-shadow: 0 8px 15px #053117;
+    transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+}
+
+
+.team-member img:hover {
+    background: #393939;
+    transform: translateY(-10px);
+    box-shadow: 0 8px 15px #005f28;
+}
+
+.team-member h3 {
+    font-size: 1.2rem;
+    color: white;
+    font-weight: 700;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+.team-member p {
+    font-size: 0.9rem;
+    color: #000000;
+    margin-top: 0;
+}
+
 
 /* Authentication Page */
 .auth-page {
@@ -246,6 +576,7 @@ nav.scrolled ul li a::after {
     text-align: center;
 }
 
+
 .form-group {
     display: flex;
     flex-direction: row;
@@ -279,7 +610,7 @@ nav.scrolled ul li a::after {
 }
 
 .form-group input:focus {
-    border-color: #6c63ff;
+    border-color: #0cf46c;
     background-color: #2e2e3a;
 }
 

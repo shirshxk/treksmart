@@ -2,25 +2,33 @@
 include 'db.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email = $_POST['email'];
+    $username = $_POST['username'];
     $password = $_POST['password'];
 
-    $query = "SELECT * FROM users WHERE email = ? AND password = ?";
+    $query = "SELECT * FROM users WHERE username = ?";
     $stmt = $conn->prepare($query);
-    $stmt->bind_param("ss", $email, $password);
+    $stmt->bind_param("s", $username);
     $stmt->execute();
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
-        session_start();
-        $_SESSION['email'] = $email;
-        header('Location: index.php');
+        $user = $result->fetch_assoc();
+        if (password_verify($password, $user['password'])) {
+            session_start();
+            $_SESSION['username'] = $user['username']; // Store username in session
+            header('Location: index.php');
+            exit;
+        } else {
+            $error = "Invalid password.";
+        }
     } else {
-        $error = "Invalid email or password.";
+        $error = "No account found with this username.";
     }
     $stmt->close();
 }
 ?>
+
+
 <link rel="stylesheet" href="/TrekSmart/public/style.css">
 
 <main class="auth-page">
@@ -40,9 +48,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <p class="error"><?php echo $error; ?></p>
             <?php endif; ?>
             <form action="login.php" method="POST">
-                <!-- Email Field -->
+                <!-- username Field -->
                 <div class="form-group">
-                    <input type="email" id="email" name="email" placeholder="Email" required>
+                    <input type="username" id="username" name="username" placeholder="Enter your username" required>
                 </div>
                 <!-- Password Field -->
                 <div class="form-group">
