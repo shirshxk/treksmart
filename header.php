@@ -22,9 +22,9 @@ require 'db.php';
         <ul>
             <li><a href="/TrekSmart/index.php">Home</a></li>
             <li><a href="/TrekSmart/about.php">About</a></li>
-            <li><a href="/public/trekking.php">Trekking</a></li>
+            <li><a href="/TrekSmart/trekking.php">Trekking</a></li>
             <li><a href="/public/blog.php">Blog</a></li>
-            <li><a href="/public/contact.php">Contact</a></li>
+            <li><a href="/TrekSmart/contact.php">Contact</a></li>
             <?php if (isset($_SESSION['username'])): ?>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle">
