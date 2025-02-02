@@ -18,22 +18,18 @@
             <div class="footer-column">
                 <h4>Quick Links</h4>
                 <ul>
-                    <li><a href="#">T</a></li>
-                    <li><a href="#">Everest</a></li>
-                    <li><a href="#">K2</a></li>
-                    <li><a href="#">Fast-Track</a></li>
+                    <li><a href="/TrekSmart/index.php">Home</a></li>
+                    <li><a href="/TrekSmart/trekking.php">Trekking</a></li>
+                    <li><a href="/TrekSmart/blogs.php">Blog</a></li>
                 </ul>
             </div>
 
             <!-- Additional Links Section -->
             <div class="footer-column">
-                <h4>Quick Links</h4>
-                <ul>
-                    <li><a href="#">Our Story</a></li>
-                    <li><a href="#">Nirmal Purja MBE</a></li>
-                    <li><a href="#">Mingma David Sherpa</a></li>
-                    <li><a href="#">Training</a></li>
-                    <li><a href="#">Newsletter</a></li>
+                <ul style="margin-top: 63px;">
+                    <li><a href="/TrekSmart/about.php">Our Story</a></li>
+                    <li><a href="/TrekSmart/blog_details.php?id=3">Langtang Trek</a></li>
+                    <li><a href="/TrekSmart/blog_details.php?id=14">Makalu</a></li>
                 </ul>
             </div>
         </div>
