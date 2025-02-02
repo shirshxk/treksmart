@@ -35,7 +35,7 @@ include 'header.php';
 
 // Check if user is logged in
 if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id'])) {
-    echo "You must be logged in to book a package.";
+    header("Location: nologin.php");
     exit();
 }
 

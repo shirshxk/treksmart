@@ -1,56 +1,5 @@
 <?php
 include 'db.php';
-
-function resizeImage($file, $targetWidth, $targetHeight, $destination) {
-    list($originalWidth, $originalHeight, $imageType) = getimagesize($file);
-
-    // Maintain aspect ratio
-    $aspectRatio = $originalWidth / $originalHeight;
-    if ($targetWidth / $targetHeight > $aspectRatio) {
-        $targetWidth = $targetHeight * $aspectRatio;
-    } else {
-        $targetHeight = $targetWidth / $aspectRatio;
-    }
-
-    // Create new image resource
-    $image = null;
-    switch ($imageType) {
-        case IMAGETYPE_JPEG:
-            $image = imagecreatefromjpeg($file);
-            break;
-        case IMAGETYPE_PNG:
-            $image = imagecreatefrompng($file);
-            break;
-        case IMAGETYPE_GIF:
-            $image = imagecreatefromgif($file);
-            break;
-        default:
-            return false; // Unsupported image type
-    }
-
-    $resizedImage = imagecreatetruecolor($targetWidth, $targetHeight);
-    imagecopyresampled($resizedImage, $image, 0, 0, 0, 0, $targetWidth, $targetHeight, $originalWidth, $originalHeight);
-
-    // Save resized image
-    switch ($imageType) {
-        case IMAGETYPE_JPEG:
-            imagejpeg($resizedImage, $destination, 90); // 90 is quality
-            break;
-        case IMAGETYPE_PNG:
-            imagepng($resizedImage, $destination);
-            break;
-        case IMAGETYPE_GIF:
-            imagegif($resizedImage, $destination);
-            break;
-    }
-
-    // Free resources
-    imagedestroy($image);
-    imagedestroy($resizedImage);
-
-    return true;
-}
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $firstname = $_POST['firstname'];
     $lastname = $_POST['lastname'];
@@ -65,26 +14,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } elseif (empty($username) || strlen($username) < 3) {
         $error = "Username must be at least 3 characters long.";
     } else {
-        $avatarPath = '/TrekSmart/assets/default-avatar.png'; // Default avatar
-
-        // Process avatar upload if provided
-        if (isset($_FILES['avatar']) && $_FILES['avatar']['error'] === UPLOAD_ERR_OK) {
-            $avatarDir = $_SERVER['DOCUMENT_ROOT'] . '/TrekSmart/uploads/avatars/';
-
-            // Ensure the directory exists
-            if (!is_dir($avatarDir)) {
-                mkdir($avatarDir, 0777, true); // Create directory if it doesn't exist
-            }
-
-            $avatarName = uniqid() . "_" . basename($_FILES['avatar']['name']);
-            $avatarFullPath = $avatarDir . $avatarName;
-
-            // Resize and save the uploaded image
-            if (resizeImage($_FILES['avatar']['tmp_name'], 200, 200, $avatarFullPath)) {
-                $avatarPath = '/TrekSmart/uploads/avatars/' . $avatarName; // Relative path saved to the database
-            }
-        }
-
         // Hash the password
         $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
 
@@ -99,10 +28,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($result->num_rows > 0) {
                 $error = "Email or username already exists. Please choose another.";
             } else {
-                // Insert new user with avatar
-                $query = "INSERT INTO users (firstname, lastname, email, password, username, avatar) VALUES (?, ?, ?, ?, ?, ?)";
+                // Insert new user
+                $query = "INSERT INTO users (firstname, lastname, email, password, username) VALUES (?, ?, ?, ?, ?)";
                 $stmt = $conn->prepare($query);
-                $stmt->bind_param("ssssss", $firstname, $lastname, $email, $hashedPassword, $username, $avatarPath);
+                $stmt->bind_param("sssss", $firstname, $lastname, $email, $hashedPassword, $username);
 
                 if ($stmt->execute()) {
                     // Redirect to login page after successful signup
@@ -119,11 +48,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
-
-
-
-
-
 <link rel="stylesheet" href="/TrekSmart/public/style.css">
 <main class="auth-page">
     <div class="auth-container">
@@ -142,7 +66,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <!-- Row for First and Last Name -->
                 <div class="form-group">
                     <input type="text" id="firstname" name="firstname" placeholder="First Name" required>
-                   
                 </div>
                 <div class="form-group">
                     <input type="text" id="lastname" name="lastname" placeholder="Last Name" required>
@@ -160,10 +83,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
                 <small id="passwordHelp" class="helper-text"></small>
                 <!-- Checkbox -->
-                <div class="form-group">
-                    <label for="avatar">Upload Avatar</label>
-                    <input type="file" id="avatar" name="avatar" accept="image/*">
-                </div>
                 <div class="checkbox-container">
                     <input type="checkbox" id="terms" required>
                     <label for="terms">I agree to the <a href="#">Terms & Conditions</a></label>

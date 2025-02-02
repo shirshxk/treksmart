@@ -37,6 +37,11 @@ body {
     color: white; /* Ensure text is readable */
 }
 
+.highlight-red {
+    background-color: #d40000;
+    padding: 10px;
+}
+
 .highlight-about {
     background-color: #0cf46c; /* Green background */
     padding: 7px 40px; /* Add padding for better appearance */
