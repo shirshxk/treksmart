@@ -1,6 +1,5 @@
 <?php
 // Start session
-session_start();
 require 'db.php';
 ?>
 

@@ -90,16 +90,16 @@ function viewDetails(packageId) {
             return response.text();
         })
         .then(data => {
-            // Assume `data` contains only the modal-specific content
             const modalBody = document.getElementById("modalBody");
-            modalBody.innerHTML = data; // Inject the fetched content into the modal body
-            document.getElementById("packageModal").style.display = "flex"; // Show the modal
+            modalBody.innerHTML = data; // Inject fetched data into modal
+            document.getElementById("packageModal").style.display = "flex"; // Display modal
         })
         .catch(error => {
             console.error("Error fetching package details:", error);
             alert("Could not load package details. Please try again.");
         });
 }
+
 
 
 function closeModal() {
@@ -128,3 +128,4 @@ document.getElementById('bookingForm').addEventListener('submit', function(event
         alert("Please fill in all required fields!");
     }
 });
+
