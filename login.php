@@ -15,6 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $user = $result->fetch_assoc();
         if (password_verify($password, $user['password'])) {
             session_start();
+            $_SESSION['user_id'] = $user['id']; // Store userid in session
             $_SESSION['username'] = $user['username']; // Store username in session
             header('Location: index.php');
             exit;

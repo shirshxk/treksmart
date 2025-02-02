@@ -2,54 +2,67 @@
 require 'db.php';
 session_start();
 
+// Debug session
+if (!isset($_SESSION['user_id'])) {
+    error_log("Session missing user_id. Session data: " . print_r($_SESSION, true));
+    echo "You need to log in to book a package.";
+    exit;
+} else {
+    error_log("Session found. User ID: " . $_SESSION['user_id']);
+}
+
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['package_id'])) {
-    // Check if user is logged in
     if (!isset($_SESSION['user_id'])) {
-        header("Location: login.php");
+        error_log("User not logged in.");
+        echo "You need to log in to book a package.";
         exit;
     }
 
     $userId = $_SESSION['user_id'];
     $packageId = intval($_POST['package_id']);
+    $firstname = htmlspecialchars(trim($_POST['firstname']));
+    $lastname = htmlspecialchars(trim($_POST['lastname']));
+    $email = htmlspecialchars(trim($_POST['email']));
+    $trekStartDate = htmlspecialchars(trim($_POST['trek_start_date']));
+    $specialRequests = htmlspecialchars(trim($_POST['special_requests'] ?? ''));
 
-    // Validate package existence
-    $packageCheckQuery = "SELECT id FROM trekking_packages WHERE id = ?";
-    $packageCheckStmt = $conn->prepare($packageCheckQuery);
-    $packageCheckStmt->bind_param("i", $packageId);
-    $packageCheckStmt->execute();
-    $packageCheckResult = $packageCheckStmt->get_result();
-
-    if ($packageCheckResult->num_rows === 0) {
-        header("Location: error.php?msg=invalid_package");
+    // Input validation
+    if (empty($firstname) || empty($lastname) || empty($email) || empty($trekStartDate)) {
+        echo "All fields are required.";
         exit;
     }
 
-    // Prevent duplicate bookings
-    $checkQuery = "SELECT * FROM bookings WHERE user_id = ? AND package_id = ?";
-    $checkStmt = $conn->prepare($checkQuery);
-    $checkStmt->bind_param("ii", $userId, $packageId);
-    $checkStmt->execute();
-    $checkResult = $checkStmt->get_result();
-
-    if ($checkResult->num_rows > 0) {
-        header("Location: error.php?msg=duplicate_booking");
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        echo "Invalid email address.";
         exit;
     }
 
-    // Insert booking
-    $query = "INSERT INTO bookings (user_id, package_id, status) VALUES (?, ?, 'Pending')";
+    // Reformat date
+    $trekStartDate = date('Y-m-d', strtotime($trekStartDate));
+
+    // Prepare SQL
+    $query = "INSERT INTO bookings (user_id, package_id, firstname, lastname, email, trek_start_date, special_requests, status)
+              VALUES (?, ?, ?, ?, ?, ?, ?, 'Pending')";
     $stmt = $conn->prepare($query);
-    $stmt->bind_param("ii", $userId, $packageId);
+
+    if (!$stmt) {
+        error_log("SQL prepare error: " . $conn->error);
+        echo "An unexpected error occurred. Please try again.";
+        exit;
+    }
+
+    $stmt->bind_param("iisssss", $userId, $packageId, $firstname, $lastname, $email, $trekStartDate, $specialRequests);
 
     if ($stmt->execute()) {
-        header("Location: my_bookings.php");
-        exit;
+        echo "Booking successful! Your request is pending approval.";
     } else {
-        error_log("Error booking the package: " . $stmt->error);
-        header("Location: error.php?msg=booking_failed");
-        exit;
+        error_log("SQL execution error: " . $stmt->error);
+        echo "Error processing booking. Please try again.";
     }
 
     $stmt->close();
+} else {
+    echo "Invalid request.";
 }
 ?>

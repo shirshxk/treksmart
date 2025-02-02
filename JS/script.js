@@ -100,6 +100,12 @@ function viewDetails(packageId) {
 function closeModal() {
     document.getElementById("packageModal").style.display = "none";
 }
+
+
+
+// Add this to handle form submission with client-side validation (optional)
+
+
 // Open Booking Modal
 function openBookingModal(packageId) {
     document.getElementById("bookingPackageId").value = packageId; // Set package ID
@@ -113,31 +119,12 @@ function closeBookingModal() {
 }
 
 
-// Handle Booking Form Submission
-document.getElementById("bookingForm").addEventListener("submit", function (event) {
-    event.preventDefault(); // Prevent default form submission
+document.getElementById('bookingForm').addEventListener('submit', function(event) {
+    const email = document.getElementById('email').value;
+    const trekStartDate = document.getElementById('trekStartDate').value;
 
-    const formData = new FormData(this);
-
-    fetch("book_package.php", {
-        method: "POST",
-        body: formData,
-    })
-        .then((response) => {
-            if (!response.ok) {
-                throw new Error("Network response was not ok");
-            }
-            return response.text();
-        })
-        .then((data) => {
-            if (data.includes("<")) {
-                console.error("Unexpected HTML response:", data);
-                alert("An unexpected error occurred. Please try again.");
-            } else {
-                alert(data); // Show clean success/error message
-            }
-            closeBookingModal(); // Close modal after booking
-        })
-        .catch((error) => console.error("Error processing booking:", error));
+    if (!email || !trekStartDate) {
+        event.preventDefault(); // Prevent form submission
+        alert("Please fill in all required fields!");
+    }
 });
-

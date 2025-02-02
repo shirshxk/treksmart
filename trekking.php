@@ -1,40 +1,15 @@
+<?php include 'header.php'; ?>
+
 <?php
 // Include the database connection
 require 'db.php';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['package_id'])) {
-    if (!isset($_SESSION['user_id'])) {
-        echo "You need to log in to book a package.";
-        exit;
-    }
-
-    $userId = $_SESSION['user_id'];
-    $packageId = intval($_POST['package_id']);
-    $firstname = htmlspecialchars($_POST['firstname']);
-    $lastname = htmlspecialchars($_POST['lastname']);
-    $email = htmlspecialchars($_POST['email']);
-    $trekStartDate = htmlspecialchars($_POST['trek_start_date']);
-    $specialRequests = htmlspecialchars($_POST['special_requests'] ?? null);
-
-    $query = "INSERT INTO bookings (user_id, package_id, firstname, lastname, email, trek_start_date, special_requests, status)
-              VALUES (?, ?, ?, ?, ?, ?, ?, 'Pending')";
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param("iisssss", $userId, $packageId, $firstname, $lastname, $email, $trekStartDate, $specialRequests);
-
-    if ($stmt->execute()) {
-        echo "Booking successful! Your request is pending approval.";
-    } else {
-        echo "Error processing booking. Please try again.";
-    }
-
-    $stmt->close();
-}
 // Check if an `id` parameter exists for package details (modal request)
 if (isset($_GET['id'])) {
     $packageId = intval($_GET['id']);
     $query = "SELECT * FROM trekking_packages WHERE id = ?";
     $stmt = $conn->prepare($query);
-    $stmt->bind_param("i", $packageId);
+    $stmt->bind_param("i", $packaeId);
     $stmt->execute();
     $result = $stmt->get_result();
 
@@ -58,6 +33,44 @@ if (isset($_GET['id'])) {
     exit; // Exit to prevent loading the rest of the trekking page content
 }
 
+// Check if user is logged in
+if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id'])) {
+    echo "You must be logged in to book a package.";
+    exit();
+}
+
+$userId = $_SESSION['user_id']; // Logged-in user's ID
+
+// Handle booking submission
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['package_id'])) {
+    // Get POST data and sanitize inputs
+    $packageId = intval($_POST['package_id']);
+    $firstname = trim($_POST['firstname']);
+    $lastname = trim($_POST['lastname']);
+    $email = trim($_POST['email']);
+    $trekStartDate = $_POST['trek_start_date'];
+    $specialRequests = isset($_POST['special_requests']) ? trim($_POST['special_requests']) : null;
+
+    // Validate required fields
+    if (empty($firstname) || empty($lastname) || empty($email) || empty($trekStartDate)) {
+        die("All required fields must be filled.");
+    }
+
+    // Insert booking into the database
+    $query = "INSERT INTO bookings (user_id, package_id, firstname, lastname, email, trek_start_date, special_requests, status) 
+              VALUES (?, ?, ?, ?, ?, ?, ?, 'Pending')";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("iisssss", $userId, $packageId, $firstname, $lastname, $email, $trekStartDate, $specialRequests);
+
+    if ($stmt->execute()) {
+        echo "Booking successful!";
+        header("Location: confirmation_page.php"); // Redirect to a confirmation page (optional)
+        exit();
+    } else {
+        die("Error while booking: " . $stmt->error);
+    }
+}
+
 // Fetch all trekking packages for display
 $query = "SELECT id, title, description, duration, price, image_path FROM trekking_packages";
 $result = $conn->query($query);
@@ -65,6 +78,7 @@ $result = $conn->query($query);
 if (!$result) {
     die("Error fetching trekking packages: " . $conn->error);
 }
+?>
 ?>
 
 <!DOCTYPE html>
@@ -76,7 +90,6 @@ if (!$result) {
     <link rel="stylesheet" href="/TrekSmart/public/style.css">
 </head>
 <body>
-    <?php include 'header.php'; ?>
 
     <main class="trekking-page">
         <!-- Header Section -->
@@ -119,38 +132,38 @@ if (!$result) {
         </div>
     </div>
     <!-- Booking Modal -->
-<div id="bookingModal" class="modal">
-    <div class="modal-content">
-        <span class="close" onclick="closeBookingModal()">&times;</span>
-        <div class="modal-body">
-            <h2>Book Your Adventure</h2>
-            <form id="bookingForm" method="POST" action="book_package.php">
-                <input type="hidden" id="bookingPackageId" name="package_id" value="">
-                <div class="booking-form-group">
-                    <label for="firstname">First Name</label>
-                    <input type="text" id="firstname" name="firstname" placeholder="Enter your first name" required>
-                </div>
-                <div class="booking-form-group">
-                    <label for="lastname">Last Name</label>
-                    <input type="text" id="lastname" name="lastname" placeholder="Enter your last name" required>
-                </div>
-                <div class="booking-form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
-                </div>
-                <div class="booking-form-group">
-                    <label for="trek_start_date">Trek Start Date</label>
-                    <input type="date" id="trekStartDate" name="trek_start_date" required>
-                </div>
-                <div class="booking-form-group">
-                    <label for="special_requests">Special Requests</label>
-                    <textarea id="special_requests" name="special_requests" placeholder="Enter special requests"></textarea>
-                </div>
-                <button type="submit" class="btn-primary">Confirm Booking</button>
-            </form>
+    <div id="bookingModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeBookingModal()">&times;</span>
+            <div class="modal-body">
+                <h2>Book Your Adventure</h2>
+                <form id="bookingForm" method="POST" action="trekking.php">
+                    <input type="hidden" id="bookingPackageId" name="package_id" value="">
+                    <div class="booking-form-group">
+                        <label for="firstname">First Name</label>
+                        <input type="text" id="firstname" name="firstname" placeholder="Enter your first name" required>
+                    </div>
+                    <div class="booking-form-group">
+                        <label for="lastname">Last Name</label>
+                        <input type="text" id="lastname" name="lastname" placeholder="Enter your last name" required>
+                    </div>
+                    <div class="booking-form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                    </div>
+                    <div class="booking-form-group">
+                        <label for="trek_start_date">Trek Start Date</label>
+                        <input type="date" id="trekStartDate" name="trek_start_date" required>
+                    </div>
+                    <div class="booking-form-group">
+                        <label for="special_requests">Special Requests</label>
+                        <textarea id="special_requests" name="special_requests" placeholder="Enter special requests"></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary">Confirm Booking</button>
+                </form>
+            </div>
         </div>
     </div>
-</div>
 <?php include 'footer.php'; ?>
  <script src="/TrekSmart/JS/script.js"></script>
 
