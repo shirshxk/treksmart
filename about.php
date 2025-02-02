@@ -11,7 +11,7 @@
 
     <main class="about-page">
         <!-- Hero Section -->
-        <section class="hero about-hero">
+        <section class="about-hero">
             <div class="hero-text">
                 <h1 class="highlight">We Elevate Your Trekking Experience</h1>
                 <p>Innovative technology designed for safer and seamless adventures.</p>

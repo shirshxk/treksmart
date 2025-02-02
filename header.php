@@ -23,7 +23,7 @@ require 'db.php';
             <li><a href="/TrekSmart/index.php">Home</a></li>
             <li><a href="/TrekSmart/about.php">About</a></li>
             <li><a href="/TrekSmart/trekking.php">Trekking</a></li>
-            <li><a href="/public/blog.php">Blog</a></li>
+            <li><a href="/TrekSmart/blogs.php">Blog</a></li>
             <li><a href="/TrekSmart/contact.php">Contact</a></li>
             <?php if (isset($_SESSION['username'])): ?>
                 <li class="dropdown">

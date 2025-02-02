@@ -10,9 +10,7 @@
             <div class="footer-column">
                 <h4>Enquiries</h4>
                 <ul>
-                    <li><a href="#">General</a></li>
-                    <li><a href="#">Exped</a></li>
-                    <li><a href="#">FAQs</a></li>
+                    <li><a href="/TrekSmart/contact.php">General</a></li>
                 </ul>
             </div>
 
@@ -20,7 +18,7 @@
             <div class="footer-column">
                 <h4>Quick Links</h4>
                 <ul>
-                    <li><a href="#">All Expeditions</a></li>
+                    <li><a href="#">T</a></li>
                     <li><a href="#">Everest</a></li>
                     <li><a href="#">K2</a></li>
                     <li><a href="#">Fast-Track</a></li>
