@@ -90,21 +90,21 @@ function viewDetails(packageId) {
             return response.text();
         })
         .then(data => {
-            document.getElementById("modalBody").innerHTML = data;
-            document.getElementById("packageModal").style.display = "flex";
+            // Assume `data` contains only the modal-specific content
+            const modalBody = document.getElementById("modalBody");
+            modalBody.innerHTML = data; // Inject the fetched content into the modal body
+            document.getElementById("packageModal").style.display = "flex"; // Show the modal
         })
-        .catch(error => console.error("Error fetching package details:", error));
+        .catch(error => {
+            console.error("Error fetching package details:", error);
+            alert("Could not load package details. Please try again.");
+        });
 }
 
-// Close Modal Function
+
 function closeModal() {
     document.getElementById("packageModal").style.display = "none";
 }
-
-
-
-// Add this to handle form submission with client-side validation (optional)
-
 
 // Open Booking Modal
 function openBookingModal(packageId) {

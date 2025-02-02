@@ -1,5 +1,3 @@
-<?php include 'header.php'; ?>
-
 <?php
 // Include the database connection
 require 'db.php';
@@ -9,14 +7,14 @@ if (isset($_GET['id'])) {
     $packageId = intval($_GET['id']);
     $query = "SELECT * FROM trekking_packages WHERE id = ?";
     $stmt = $conn->prepare($query);
-    $stmt->bind_param("i", $packaeId);
+    $stmt->bind_param("i", $packageId);
     $stmt->execute();
     $result = $stmt->get_result();
 
     if ($result->num_rows === 1) {
         $row = $result->fetch_assoc();
         ?>
-        <!-- Modal Package Details -->
+        <!-- Output only modal content -->
         <h2 class="detail-title"><?= htmlspecialchars($row['title']); ?></h2>
         <p><?= htmlspecialchars($row['description']); ?></p>
         <ul>
@@ -30,8 +28,10 @@ if (isset($_GET['id'])) {
     }
 
     $stmt->close();
-    exit; // Exit to prevent loading the rest of the trekking page content
+    exit; // Exit to prevent outputting the rest of the page
 }
+
+include 'header.php';
 
 // Check if user is logged in
 if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id'])) {
@@ -78,7 +78,6 @@ $result = $conn->query($query);
 if (!$result) {
     die("Error fetching trekking packages: " . $conn->error);
 }
-?>
 ?>
 
 <!DOCTYPE html>
