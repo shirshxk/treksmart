@@ -488,15 +488,11 @@ nav.scrolled .dropdown-toggle::after {
     text-align: center;
 }
 
-.team-member img {
-    width: 100%;
-    border-radius: 50%;
-    height: auto;
-}
 
 .team-member img {
     width: 100%;
-    max-width: 5000px;
+    height: 300px; /* Set a fixed height for all images */
+    object-fit: cover; /* Ensures the image fills the area while preserving aspect ratio */
     border-radius: 8px;
     box-shadow: 0 8px 15px #053117;
     transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;

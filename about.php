@@ -28,8 +28,8 @@
                 At TrekSmart, trekking is more than just a service—it’s a passion, a mission, and a way to redefine adventure. Founded by Shirshak Shrestha, TrekSmart was created to revolutionize trekking experiences in Nepal by blending modern technology with local expertise. With safety, sustainability, and seamless exploration at its core, TrekSmart empowers adventurers with real-time navigation, offline maps, and direct connections to trusted guides and accommodations. Whether you're an experienced trekker or a first-time explorer, we ensure that every journey through the Himalayas is smarter, safer, and more immersive than ever before.
                 </p>
                 <div class="image-grid">
-                    <img src="/TrekSmart/assets/image/image1.jpg" alt="Creative Ideas">
-                    <img src="/TrekSmart/assets/image/image2.jpg" alt="Teamwork">
+                    <img src="/TrekSmart/assets/image/thumbone.jpg" alt="TrekSmart Office">
+                    <img src="/TrekSmart/assets/image/thumbtwo.jpg" alt="TrekSmart BOD">
                 </div>
             </div>
         </section>
@@ -88,24 +88,24 @@
                 </div>
                 <div class="team-grid">
                     <div class="team-member">
-                        <img src="/TrekSmart/assets/image/member2.jpg" alt="Jane Cooper">
-                        <h3>Jane Cooper</h3>
-                        <p class="highlight-about">Senior Designer</p>
+                        <img src="/TrekSmart/assets/image/memberone.jpg" alt="Deewa Dhakal">
+                        <h3>Deewa Dhakal</h3>
+                        <p class="highlight-about">Co-Founder/COO</p>
                     </div>
                     <div class="team-member">
-                        <img src="/TrekSmart/assets/image/member2.jpg" alt="Courtney Jessy">
-                        <h3>Courtney Jessy</h3>
+                        <img src="/TrekSmart/assets/image/membertwo.jpg" alt="CR7">
+                        <h3>Cristiano Ronaldo</h3>
                         <p class="highlight-about">Marketing Lead</p>
                     </div>
                     <div class="team-member">
-                        <img src="/TrekSmart/assets/image/member3.jpg" alt="Cameron Williamson">
-                        <h3>Cameron Williamson</h3>
-                        <p class="highlight-about">Software Engineer</p>
+                        <img src="/TrekSmart/assets/image/memberthree.jpg" alt="KP OLI">
+                        <h3>Khadga Prasad Oli</h3>
+                        <p class="highlight-about">HR Manager</p>
                     </div>
                     <div class="team-member">
-                        <img src="/TrekSmart/assets/image/member4.jpg" alt="Emily Johnson">
-                        <h3>Emily Johnson</h3>
-                        <p class="highlight-about">HR Manager</p>
+                        <img src="/TrekSmart/assets/image/memberfour.jpg" alt="Mark">
+                        <h3>Mark Zuckerberg</h3>
+                        <p class="highlight-about">Software Engineer</p>
                     </div>
                 </div>
             </div>

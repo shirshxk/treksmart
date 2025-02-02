@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->bind_param("sssssss", $firstName, $lastName, $email, $phoneNumber, $address, $title, $message);
 
     if ($stmt->execute()) {
-        echo "Your message has been sent successfully!";
+        header("Location: contact_confirmation.php");
     } else {
         echo "Failed to send your message. Please try again later.";
     }

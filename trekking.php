@@ -63,7 +63,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['package_id'])) {
     $stmt->bind_param("iisssss", $userId, $packageId, $firstname, $lastname, $email, $trekStartDate, $specialRequests);
 
     if ($stmt->execute()) {
-        echo "Booking successful!";
         header("Location: confirmation_page.php"); // Redirect to a confirmation page (optional)
         exit();
     } else {
