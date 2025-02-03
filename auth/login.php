@@ -36,41 +36,48 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->close();
 }
 ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - TrekSmart</title>
+    <link rel="icon" type="image/png" href="/TrekSmart/assets/logo/favicon.png">
+    <!-- Link to the CSS file -->
+    <link rel="stylesheet" href="/TrekSmart/assets/CSS/style.css">
+</head>
+<body>
+    <main class="auth-page">
+        <div class="auth-container">
+            <!-- Left side: Background image with logo and caption -->
+            <div class="auth-left" style="background-image: url('/TrekSmart/assets/image/bg-login.webp');">
+                <img src="/TrekSmart/assets/logo/logowhite.png" alt="TrekSmart Logo">
+                <div class="auth-caption">
+                    <h2>Capturing <b class="highlight">Moments</b>, Creating <b class="highlight">Memories</b></h2>
+                </div>
+            </div>
 
-<!-- Link to the CSS file -->
-<link rel="stylesheet" href="/TrekSmart/assets/CSS/style.css">
-
-<main class="auth-page">
-    <div class="auth-container">
-        <!-- Left side: Background image with logo and caption -->
-        <div class="auth-left" style="background-image: url('/TrekSmart/assets/image/bg-login.webp');">
-            <img src="/TrekSmart/assets/logo/logowhite.png" alt="TrekSmart Logo">
-            <div class="auth-caption">
-                <h2>Capturing <b class="highlight">Moments</b>, Creating <b class="highlight">Memories</b></h2>
+            <!-- Right side: Login form -->
+            <div class="auth-right">
+                <h2>Login</h2>
+                <?php if (isset($error)): ?>
+                    <p class="error"><?php echo $error; ?></p>
+                <?php endif; ?>
+                <form action="login.php" method="POST">
+                    <div class="form-group">
+                        <input type="text" id="username" name="username" placeholder="Enter your username" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                    </div>
+                    <button type="submit" class="btn-primary">Login</button>
+                </form>
+                <p>Don't have an account? <a href="signup.php">Sign Up</a></p>
             </div>
         </div>
+    </main>
 
-        <!-- Right side: Login form -->
-        <div class="auth-right">
-            <h2>Login</h2>
-            <?php if (isset($error)): ?>
-                <p class="error"><?php echo $error; ?></p>
-            <?php endif; ?>
-            <form action="login.php" method="POST">
-                <div class="form-group">
-                    <input type="text" id="username" name="username" placeholder="Enter your username" required>
-                </div>
-                <div class="form-group">
-                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
-                </div>
-                <button type="submit" class="btn-primary">Login</button>
-            </form>
-            <p>Don't have an account? <a href="signup.php">Sign Up</a></p>
-        </div>
-    </div>
-</main>
-
-<!-- Link to the JavaScript file -->
-<script src="/TrekSmart/assets/JS/script.js"></script>
+    <!-- Link to the JavaScript file -->
+    <script src="/TrekSmart/assets/JS/script.js"></script>
 </body>
 </html>

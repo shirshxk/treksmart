@@ -25,6 +25,7 @@ $bookings = $conn->query("SELECT b.id, b.trek_start_date, b.special_requests, b.
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
+    <link rel="icon" type="image/png" href="/TrekSmart/assets/logo/favicon.png">
     <!-- Link to the CSS file -->
     <link rel="stylesheet" href="/TrekSmart/assets/CSS/style.css">
 </head>

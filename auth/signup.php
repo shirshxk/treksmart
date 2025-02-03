@@ -1,5 +1,5 @@
 <?php
-// Include the database connection file
+// Include the database connection file from the includes folder
 require '../includes/db.php';
 
 // Process the signup form when submitted
@@ -17,27 +17,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } elseif (empty($username) || strlen($username) < 3) {
         $error = "Username must be at least 3 characters long.";
     } else {
-        // Set a default avatar, then update if a profile picture is uploaded
+        // Set a default avatar using the correct path; update if a profile picture is uploaded
         $avatar = '/TrekSmart/assets/image/default-avatar.png';
         if (isset($_FILES['profile_picture']) && $_FILES['profile_picture']['error'] == UPLOAD_ERR_OK) {
             // Build the absolute file system path using DOCUMENT_ROOT
             $uploadDir = $_SERVER['DOCUMENT_ROOT'] . '/TrekSmart/uploads/';
-            // Create a unique filename
+            // Create a unique filename for the uploaded profile picture
             $fileName = time() . '_' . basename($_FILES['profile_picture']['name']);
             $targetPath = $uploadDir . $fileName;
             
-            // Attempt to move the uploaded file
+            // Attempt to move the uploaded file to the uploads directory
             if (move_uploaded_file($_FILES['profile_picture']['tmp_name'], $targetPath)) {
-                // Store the public URL (relative to your web root)
+                // Store the public URL (relative to the web root)
                 $avatar = '/TrekSmart/uploads/' . $fileName;
             }
         }
 
-        // Hash the password using BCRYPT
+        // Hash the password using BCRYPT for security
         $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
 
         try {
-            // Check if email or username already exists
+            // Check if email or username already exists in the database
             $checkQuery = "SELECT email, username FROM users WHERE email = ? OR username = ?";
             $stmt = $conn->prepare($checkQuery);
             $stmt->bind_param("ss", $email, $username);
@@ -67,64 +67,73 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup - TrekSmart</title>
+    <link rel="icon" type="image/png" href="/TrekSmart/assets/logo/favicon.png">
+    <!-- Link to the CSS file -->
+    <link rel="stylesheet" href="/TrekSmart/assets/CSS/style.css">
+</head>
+<body>
+    <main class="auth-page">
+        <div class="auth-container">
+            <!-- Left side: Background image with logo and caption -->
+            <div class="auth-left" style="background-image: url('/TrekSmart/assets/image/bg-login.webp');">
+                <img src="/TrekSmart/assets/logo/logowhite.png" alt="TrekSmart Logo">
+                <div class="auth-caption">
+                    <h2>Capturing <b class="highlight">Moments</b>, Creating <b class="highlight">Memories</b></h2>
+                </div>
+            </div>
 
-<!-- Link to the CSS file -->
-<link rel="stylesheet" href="/TrekSmart/assets/CSS/style.css">
-
-<main class="auth-page">
-    <div class="auth-container">
-        <!-- Left side: Background image with logo and caption -->
-        <div class="auth-left" style="background-image: url('/TrekSmart/assets/image/bg-login.webp');">
-            <img src="/TrekSmart/assets/logo/logowhite.png" alt="TrekSmart Logo">
-            <div class="auth-caption">
-                <h2>Capturing <b class="highlight">Moments</b>, Creating <b class="highlight">Memories</b></h2>
+            <!-- Right side: Signup form -->
+            <div class="auth-right">
+                <h2>Create an Account</h2>
+                <?php if (isset($error)): ?>
+                    <p class="error"><?php echo $error; ?></p>
+                <?php endif; ?>
+                <form action="signup.php" method="POST" enctype="multipart/form-data">
+                    <!-- First and Last Name Fields -->
+                    <div class="form-group">
+                        <input type="text" id="firstname" name="firstname" placeholder="First Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="lastname" name="lastname" placeholder="Last Name" required>
+                    </div>
+                    <!-- Email Field -->
+                    <div class="form-group">
+                        <input type="email" id="email" name="email" placeholder="Email" required>
+                    </div>
+                    <!-- Username Field -->
+                    <div class="form-group">
+                        <input type="text" id="username" name="username" placeholder="Username" required>
+                    </div>
+                    <!-- Password Field -->
+                    <div class="form-group">
+                        <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                    </div>
+                    <small id="passwordHelp" class="helper-text"></small>
+                    <!-- Profile Picture Field -->
+                    <div class="form-group">
+                        <label for="profile_picture">Profile Picture</label>
+                        <input type="file" id="profile_picture" name="profile_picture" accept="image/*">
+                    </div>
+                    <!-- Terms & Conditions Checkbox -->
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="terms" required>
+                        <label for="terms">I agree to the Terms & Conditions!</label>
+                    </div>
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn-primary">Create account</button>
+                </form>
+                <p>Already have an account? <a href="login.php">Login</a></p>
             </div>
         </div>
+    </main>
 
-        <!-- Right side: Signup form -->
-        <div class="auth-right">
-            <h2>Create an Account</h2>
-            <?php if (isset($error)): ?>
-                <p class="error"><?php echo $error; ?></p>
-            <?php endif; ?>
-            <form action="signup.php" method="POST" enctype="multipart/form-data">
-                <!-- First and Last Name Fields -->
-                <div class="form-group">
-                    <input type="text" id="firstname" name="firstname" placeholder="First Name" required>
-                </div>
-                <div class="form-group">
-                    <input type="text" id="lastname" name="lastname" placeholder="Last Name" required>
-                </div>
-                <!-- Email Field -->
-                <div class="form-group">
-                    <input type="email" id="email" name="email" placeholder="Email" required>
-                </div>
-                <!-- Username Field -->
-                <div class="form-group">
-                    <input type="text" id="username" name="username" placeholder="Username" required>
-                </div>
-                <!-- Password Field -->
-                <div class="form-group">
-                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
-                </div>
-                <small id="passwordHelp" class="helper-text"></small>
-                <!-- Profile Picture Field -->
-                <div class="form-group">
-                    <label for="profile_picture">Profile Picture</label>
-                    <input type="file" id="profile_picture" name="profile_picture" accept="image/*">
-                </div>
-                <!-- Terms & Conditions Checkbox -->
-                <div class="checkbox-container">
-                    <input type="checkbox" id="terms" required>
-                    <label for="terms">I agree to the Terms & Conditions!</label>
-                </div>
-                <!-- Submit Button -->
-                <button type="submit" class="btn-primary">Create account</button>
-            </form>
-            <p>Already have an account? <a href="login.php">Login</a></p>
-        </div>
-    </div>
-</main>
-
-<!-- Link to the JavaScript file -->
-<script src="/TrekSmart/assets/JS/script.js"></script>
+    <!-- Link to the JavaScript file -->
+    <script src="/TrekSmart/assets/JS/script.js"></script>
+</body>
+</html>
