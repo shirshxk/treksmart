@@ -15,8 +15,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $user = $result->fetch_assoc();
         if (password_verify($password, $user['password'])) {
             session_start();
-            $_SESSION['user_id'] = $user['id']; // Store userid in session
-            $_SESSION['username'] = $user['username']; // Store username in session
+            $_SESSION['user_id'] = $user['id'];        
+            $_SESSION['username'] = $user['username'];  
+            $_SESSION['admin_check'] = $user['admin_check']; 
+
             header('Location: index.php');
             exit;
         } else {
@@ -38,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="auth-left" style="background-image: url('/TrekSmart/assets/image/bg-login.webp');">
             <img src="/TrekSmart/assets/logo/logowhite.png" alt="TrekSmart Logo">
             <div class="auth-caption">
-            <h2>Capturing <b class="highlight">Moments</b>, Creating <b class="highlight">Memories</b></h2>
+                <h2>Capturing <b class="highlight">Moments</b>, Creating <b class="highlight">Memories</b></h2>
             </div>
         </div>
 
@@ -51,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <form action="login.php" method="POST">
                 <!-- username Field -->
                 <div class="form-group">
-                    <input type="username" id="username" name="username" placeholder="Enter your username" required>
+                    <input type="text" id="username" name="username" placeholder="Enter your username" required>
                 </div>
                 <!-- Password Field -->
                 <div class="form-group">

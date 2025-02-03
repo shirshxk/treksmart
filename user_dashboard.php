@@ -9,14 +9,19 @@ if (!isset($_SESSION['user_id'])) {
 
 $userId = $_SESSION['user_id'];
 
-// Fetch bookings for the logged-in user
-$query = "SELECT * FROM bookings WHERE user_id = ? ORDER BY booking_date DESC";
+// Fetch tables for the logged-in user
+$query = "SELECT b.*, p.title AS package_title 
+          FROM bookings b
+          JOIN trekking_packages p ON b.package_id = p.id
+          WHERE b.user_id = ? 
+          ORDER BY b.booking_date DESC";
 $stmt = $conn->prepare($query);
 $stmt->bind_param("i", $userId);
 $stmt->execute();
 $result = $stmt->get_result();
 $bookings = $result->fetch_all(MYSQLI_ASSOC);
 $stmt->close();
+
 
 // Handle form submission for editing a booking
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_booking_id'])) {
@@ -82,34 +87,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancel_booking_id']))
                 <table class="dashboard-table">
                     <thead>
                         <tr>
-                            <th>#</th>
-                            <th>Package</th>
-                            <th>Trek Date</th>
-                            <th>Status</th>
-                            <th>Actions</th>
+                            <th style="background-color: #333;">#</th>
+                            <th style="background-color: #333;">Package</th>
+                            <th style="background-color: #333;">Trek Date</th>
+                            <th style="background-color: #333;">Status</th>
+                            <th style="background-color: #333;">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php foreach ($bookings as $index => $booking): ?>
                             <tr>
                                 <td><?= $index + 1; ?></td>
-                                <td><?= htmlspecialchars($booking['package_id']); ?></td>
+                                <td><?= htmlspecialchars($booking['package_title']); ?></td>
                                 <td><?= htmlspecialchars($booking['trek_start_date']); ?></td>
                                 <td><?= htmlspecialchars($booking['status']); ?></td>
                                 <td>
-                                <button class="edit-btn" onclick="openEditModal(<?= $booking['id']; ?>, '<?= htmlspecialchars($booking['trek_start_date']); ?>', '<?= htmlspecialchars($booking['special_requests']); ?>')">
-                                    Edit
-                                </button>
-                                <button class="cancel-btn" onclick="openCancelModal(<?= $booking['id']; ?>)">
-                                    Cancel
-                                </button>
+                                    <button class="edit-btn" onclick="openEditModal(<?= $booking['id']; ?>, '<?= htmlspecialchars($booking['trek_start_date']); ?>', '<?= htmlspecialchars($booking['special_requests']); ?>')">
+                                        Edit
+                                    </button>
+                                    <button class="cancel-btn" onclick="openCancelModal(<?= $booking['id']; ?>)">
+                                        Cancel
+                                    </button>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
                 </table>
+
             <?php else: ?>
-                <p>You have no bookings yet.</p>
+                <p style="color:black; text-align:center">You have no bookings yet.</p>
             <?php endif; ?>
         </div>
     </main>

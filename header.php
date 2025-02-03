@@ -32,6 +32,11 @@ require 'db.php';
                         <?= strtoupper($_SESSION['username']); ?> ▼
                     </a>
                     <ul class="dropdown-menu">
+                        <?php if ($_SESSION['admin_check'] == 1): ?>
+                            <li><a href="/TrekSmart/admin_dashboard.php">Admin Dashboard</a></li>
+                        <?php else: ?>
+                            <li><a href="/TrekSmart/user_dashboard.php">User Dashboard</a></li>
+                        <?php endif; ?>
                         <li><a href="/TrekSmart/logout.php">Logout</a></li>
                     </ul>
                 </li>

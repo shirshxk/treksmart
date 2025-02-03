@@ -12,8 +12,8 @@
     include 'header.php';
     ?>
     <div class="confirmation">
-        <h1>Booking <span class="highlight">Confirmed!</span></h1>
-        <p>Your booking has been confirmed. Thank you for trusting us!</p>
+        <h1>Booking <span class="highlight">recieved!</span></h1>
+        <p>Your booking has been sent! Our team will review it in no time. <br> Thank you for trusting us!</p>
     </div>
 
 

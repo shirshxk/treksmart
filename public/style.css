@@ -137,6 +137,7 @@ nav.scrolled .dropdown-toggle::after {
     background-color: #0cf46c; /* Keep the underline consistent */
 }
 /* Dropdown Container */
+
 .dropdown {
     position: relative;
     display: inline-block;
@@ -155,6 +156,8 @@ nav.scrolled .dropdown-toggle::after {
 .dropdown .dropdown-menu {
     display: none;
     position: absolute;
+    width: 100%;
+    min-width: 200px;
     top: 100%;
     right: 0;
     background-color: #1d1d27;
@@ -164,12 +167,13 @@ nav.scrolled .dropdown-toggle::after {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     z-index: 1000;
     list-style: none;
-    min-width: 120px;
+    text-align: center;
 }
 
 .dropdown .dropdown-menu li {
-    text-align: center;
-    padding-left: 25px;
+    padding-left: 5px;
+    margin-right: 0;
+    margin-left: 0;
 }
 
 .dropdown .dropdown-menu li a {
@@ -604,12 +608,16 @@ nav.scrolled .dropdown-toggle::after {
     color: white;
     font-size: 1rem;
     outline: none;
+    font-family: Poppins, sans-serif;
 }
+
 
 
 .form-group input::placeholder {
     color: #aaa;
+    font-family: Poppins, sans-serif;
 }
+
 
 .form-group input:focus {
     border-color: #0cf46c;
@@ -640,7 +648,8 @@ nav.scrolled .dropdown-toggle::after {
     border-radius: 6px;
     padding: 10px 0;
     cursor: pointer;
-    width: 100%;
+    width: 200px;
+    margin-bottom: 20px;
     font-size: 1rem;
     text-align: center;
     transition: background-color 0.3s ease;
@@ -770,6 +779,8 @@ p a:hover {
     text-align: center;
     transition: background-color 0.3s ease;
     width: 100%;
+    font-family: Poppins, sans-serif;
+    margin-top: 10px;
 }
 
 .modal-content .btn-primary:hover {
@@ -814,6 +825,7 @@ input[type="date"] {
     font-size: 0.9rem;
     font-weight: bold;
     color: #333;
+    margin-top: 5px;
 }
 
 .booking-form-group input,
@@ -829,6 +841,7 @@ input[type="date"] {
 .booking-form-group textarea {
     resize: none;
 }
+
 
 .booking-form-group input:focus,
 .booking-form-group textarea:focus {
@@ -849,6 +862,35 @@ input[type="date"] {
 
 #bookingForm button:hover {
     background-color: #09c156;
+}
+
+select {
+    width: 100%;
+    padding: 10px; 
+    font-size: 1rem; 
+    border: 1px solid #ddd; 
+    border-radius: 8px;
+    background-color: #ffffff;
+    color: #000000; 
+    outline: none;
+    appearance: none; 
+    cursor: pointer; 
+    transition: border-color 0.3s, background-color 0.3s;
+    font-family: Poppins, sans-serif;
+}
+
+select:hover {
+    border-color: #00ff88; 
+}
+
+select:focus {
+    border-color: #00ff88; 
+    background-color: #c2c2c2;
+}
+
+select option {
+    background-color: #f0f0f0; 
+    color: #000000;
 }
 
 
@@ -995,10 +1037,10 @@ input[type="date"] {
 .card-buttons .btn-primary,
 .card-buttons .btn-secondary {
     border: none;
-    padding: 10px 20px;
+    font-family: Poppins, sans-serif;
+    padding: 2px 20px;
     border-radius: 5px;
     font-size: 0.9rem;
-    font-weight: bold;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
@@ -1328,8 +1370,11 @@ input[type="date"] {
     outline: none;
 }
 
+
 #contactForm button {
     grid-column: span 2;
+    font-family: Poppins, sans-serif;
+    font-weight: bold;
     background-color: #0cf46c;
     color: white;
     padding: 10px 20px;
@@ -1337,11 +1382,12 @@ input[type="date"] {
     border-radius: 5px;
     font-size: 1.1rem;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s, transform 0.2s ease;
 }
 
 #contactForm button:hover {
-    background-color: #09c156;
+    background-color: #1eff7c;
+    transform: scale(1.01);
 }
 
 
@@ -1610,3 +1656,169 @@ button.cancel-btn:hover {
 .site-footer p b {
     font-weight: bold;
 }
+
+
+.sidebar {
+    background-color: #1e1e2f; /* Dark background */
+    color: #fff;
+    height: 100vh;
+    width: 250px;
+    position: fixed;
+    top: 0px;
+    left: 0;
+    justify-content: space-between;
+    padding: 20px;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar-title {
+    color: #00ff88; /* Bright green for highlight */
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex-grow: 1;
+}
+
+.sidebar-menu li {
+    margin-bottom: 15px;
+}
+
+.sidebar-link {
+    color: #b3b3ff; /* Light purple links */
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 500;
+    display: block;
+    padding: 10px 15px;
+    border-radius: 8px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.sidebar-link:hover {
+    background-color: #2a2a3f; /* Slightly brighter background */
+    color: #00ff88; /* Highlight green */
+}
+
+
+.sidebar-link.active {
+    background-color: #1e1e2f; 
+    color: #fff; 
+    font-weight: bold;
+    border-left: 4px solid #00ff88; 
+    padding-left: 11px; 
+}
+
+
+.sidebar-image {
+    width: 150px;
+    height: auto;
+    margin: 250px auto 0 auto;
+    display: block;
+}
+
+
+/* Content Area */
+.content {
+    margin-left: 270px;
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+}
+
+.content h2 {
+    margin-bottom: 20px;
+    color: #0cf46c;
+}
+
+/* Table Styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+table th, table td {
+    padding: 15px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+table th {
+    background-color: #333;
+    color: white;
+}
+
+table td {
+    background-color: #f9f9f9;
+}
+
+/* Button Styling */
+button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background-color: #0cf46c;
+    color: white;
+    font-family: Poppins, sans-serif;
+}
+
+.btn-primary:hover {
+    background-color: #09c156;
+}
+
+.btn-danger {
+    background-color: #d9534f;
+    color: white;
+    font-family: Poppins, sans-serif;
+}
+
+.btn-danger:hover {
+    background-color: #cc0000;
+}
+
+.btn-edit {
+    background-color: #00ff88;
+    color: white;
+    font-family: Poppins, sans-serif;
+}
+
+.btn-edit:hover {
+    background-color: #03cd6f;
+}
+
+.btn-cancel {
+    font-family: Poppins, sans-serif;
+    transition: background 0.3s;
+}
+
+.btn-cancel:hover {
+    background-color: rgb(206, 206, 206);
+}
+.btn-approve {
+    background-color: #0cf46c;
+    color: white;
+    font-family: Poppins, sans-serif;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.btn-approve:hover {
+    background-color: #09c156;
+}
+
+

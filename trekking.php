@@ -113,8 +113,8 @@ if (!$result) {
                         </ul>
                         <div class="price">$<?= htmlspecialchars($row['price']); ?></div>
                         <div class="card-buttons">
-                        <button class="btn-primary" onclick="openBookingModal(<?= $row['id']; ?>)">Book Now</button>
-                        <button class="btn-secondary" data-id="<?= $row['id']; ?>">View Details</button>
+                            <button class="btn-primary" style="font-size:20px;font-weight:bold;height:60px;margin-bottom:0;" onclick="openBookingModal(<?= $row['id']; ?>)">Book Now</button>
+                            <button class="btn-secondary" data-id="<?= $row['id']; ?>">View Details</button>
                         </div>
                     </div>
                 </div>

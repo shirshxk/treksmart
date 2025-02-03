@@ -129,3 +129,94 @@ document.getElementById('bookingForm').addEventListener('submit', function(event
     }
 });
 
+// Modal Logic
+function openModal(modalId) {
+    document.getElementById(modalId).style.display = "flex";
+}
+
+function closeModal(modalId) {
+    document.getElementById(modalId).style.display = "none";
+}
+
+// Section Switching Logic
+function showSection(sectionId) {
+    document.querySelectorAll('.dashboard-section').forEach(section => {
+        section.style.display = "none";
+    });
+    document.getElementById(sectionId).style.display = "block";
+}
+
+
+function deleteUser(id) {
+    if (confirm("Are you sure you want to delete this user?")) {
+        window.location.href = `admin_actions.php?action=deleteUser&id=${id}`;
+    }
+}
+
+// Confirmation for Deletion
+function deletePackage(id) {
+    if (confirm("Are you sure you want to delete this package?")) {
+        window.location.href = `admin_actions.php?action=deletePackage&id=${id}`;
+    }
+}
+
+function deleteBlog(id) {
+    if (confirm("Are you sure you want to delete this blog?")) {
+        window.location.href = `admin_actions.php?action=deleteBlog&id=${id}`;
+    }
+}
+
+function deleteBooking(id) {
+    if (confirm("Are you sure you want to delete this booking?")) {
+        window.location.href = `admin_actions.php?action=deleteBooking&id=${id}`;
+    }
+}
+
+function approveBooking(id) {
+    if (confirm("Are you sure you want to approve this booking?")) {
+        window.location.href = `admin_actions.php?action=approveBooking&id=${id}`;
+    }
+}
+
+
+function cancelBooking(id) {
+    if (confirm("Are you sure you want to cancel this booking?")) {
+        window.location.href = `admin_actions.php?action=cancelBooking&id=${id}`;
+    }
+}
+
+
+// Open Edit Package Modal
+function openEditPackageModal(id, title, description, price, duration, difficulty) {
+    document.getElementById('edit_package_id').value = id;
+    document.getElementById('edit_package_title').value = title;
+    document.getElementById('edit_package_description').value = description;
+    document.getElementById('edit_package_price').value = price;
+    document.getElementById('edit_package_duration').value = duration;
+    document.getElementById('edit_package_difficulty').value = difficulty;
+    openModal('editPackageModal');
+}
+
+// Open Edit Blog Modal
+function openEditBlogModal(id, title, excerpt, content, readTime) {
+    document.getElementById('edit_blog_id').value = id;
+    document.getElementById('edit_blog_title').value = title;
+    document.getElementById('edit_blog_excerpt').value = excerpt;
+    document.getElementById('edit_blog_content').value = content;
+    document.getElementById('edit_blog_read_time').value = readTime;
+    
+    openModal('editBlogModal');
+}
+
+
+// Function to open the Edit User Modal
+function openEditUserModal(id, username, email, adminCheck) {
+    document.getElementById('edit_user_id').value = id;
+    document.getElementById('edit_username').value = username;
+    document.getElementById('edit_email').value = email;
+    document.getElementById('edit_admin_check').value = adminCheck;
+    document.getElementById('editUserModal').style.display = 'block';
+
+    // Open the modal
+    openModal('editUserModal');
+}
