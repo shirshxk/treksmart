@@ -82,14 +82,16 @@ $bookings = $conn->query("SELECT b.id, b.trek_start_date, b.special_requests, b.
                                 <!-- Display role based on admin_check -->
                                 <td><?= $user['admin_check'] == 1 ? 'Admin' : 'User'; ?></td>
                                 <td>
-                                    <button class="btn-edit"
-                                        onclick="openEditUserModal(
-                                            <?= $user['id'] ?>, 
-                                            '<?= htmlspecialchars($user['username'], ENT_QUOTES) ?>', 
-                                            '<?= htmlspecialchars($user['email'], ENT_QUOTES) ?>',
-                                            <?= $user['admin_check'] ?>
-                                        )">Edit
-                                    </button>
+                                <button class="btn-edit"
+                                    onclick="openEditUserModal(
+                                        <?= $user['id'] ?>, 
+                                        '<?= htmlspecialchars($user['firstname'], ENT_QUOTES) ?>',
+                                        '<?= htmlspecialchars($user['lastname'], ENT_QUOTES) ?>',
+                                        '<?= htmlspecialchars($user['username'], ENT_QUOTES) ?>', 
+                                        '<?= htmlspecialchars($user['email'], ENT_QUOTES) ?>',
+                                        <?= $user['admin_check'] ?>
+                                    )">Edit
+                                </button>
                                     <button class="btn-danger" onclick="deleteUser(<?= $user['id'] ?>)">Delete</button>
                                 </td>
                             </tr>
@@ -211,9 +213,17 @@ $bookings = $conn->query("SELECT b.id, b.trek_start_date, b.special_requests, b.
         <div class="modal-content">
             <span class="close" onclick="closeModal('addUserModal')">&times;</span>
             <h2>Add User</h2>
-            <form method="POST" action="admin_actions.php?action=addUser">
-                <div class="booking-form-group >
-                    <label for="add_username">Username</label>
+            <form method="POST" action="admin_actions.php?action=addUser" enctype="multipart/form-data">
+                <div class="booking-form-group">
+                    <label for="add_firstname">First Name</label>
+                    <input type="text" id="add_firstname" name="firstname" required>
+                </div>
+                <div class="booking-form-group">
+                    <label for="add_lastname">Last Name</label>
+                    <input type="text" id="add_lastname" name="lastname" required>
+                </div>
+                <div class="booking-form-group">
+                    <label for="add_username" style="font-size:0.9rem;font-weight:bold">Username</label>
                     <input type="text" id="add_username" name="username" required>
                 </div>
                 <div class="booking-form-group">
@@ -231,6 +241,10 @@ $bookings = $conn->query("SELECT b.id, b.trek_start_date, b.special_requests, b.
                         <option value="1">Admin</option>
                     </select>
                 </div>
+                <div class="booking-form-group">
+                    <label for="add_profile_picture">Profile Picture</label>
+                    <input type="file" id="add_profile_picture" name="profile_picture" accept="image/*">
+                </div>
                 <button type="submit" class="btn-primary">Add User</button>
             </form>
         </div>
@@ -240,8 +254,16 @@ $bookings = $conn->query("SELECT b.id, b.trek_start_date, b.special_requests, b.
         <div class="modal-content">
             <span class="close" onclick="closeModal('editUserModal')">&times;</span>
             <h2>Edit User</h2>
-            <form method="POST" action="admin_actions.php?action=editUser">
+            <form method="POST" action="admin_actions.php?action=editUser" enctype="multipart/form-data">
                 <input type="hidden" id="edit_user_id" name="id">
+                <div class="booking-form-group">
+                    <label for="edit_firstname">First Name</label>
+                    <input type="text" id="edit_firstname" name="firstname" required>
+                </div>
+                <div class="booking-form-group">
+                    <label for="edit_lastname">Last Name</label>
+                    <input type="text" id="edit_lastname" name="lastname" required>
+                </div>
                 <div class="booking-form-group">
                     <label for="edit_username">Username</label>
                     <input type="text" id="edit_username" name="username" required>
@@ -256,6 +278,10 @@ $bookings = $conn->query("SELECT b.id, b.trek_start_date, b.special_requests, b.
                         <option value="0">User</option>
                         <option value="1">Admin</option>
                     </select>
+                </div>
+                <div class="booking-form-group">
+                    <label for="edit_profile_picture">Profile Picture</label>
+                    <input type="file" id="edit_profile_picture" name="profile_picture" accept="image/*">
                 </div>
                 <button type="submit" class="btn-primary">Update User</button>
             </form>

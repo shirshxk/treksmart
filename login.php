@@ -18,6 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['user_id'] = $user['id'];        
             $_SESSION['username'] = $user['username'];  
             $_SESSION['admin_check'] = $user['admin_check']; 
+            $_SESSION['avatar'] = $user['avatar'];
 
             header('Location: index.php');
             exit;

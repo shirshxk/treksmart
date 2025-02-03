@@ -1194,6 +1194,7 @@ select option {
     width: 100vw;
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.6);
+    overflow-y: auto;
     z-index: 1000;
     justify-content: center;
     align-items: center;
@@ -1205,6 +1206,8 @@ select option {
     border-radius: 8px;
     width: 90%;
     max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
     position: relative;
     z-index: 109000;
 }

@@ -15,14 +15,31 @@ $action = $_GET['action'] ?? '';
  * ✅ ADD USER
  */
 if ($action === 'addUser' && $_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username = $_POST['username'];
-    $email = $_POST['email'];
-    $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
-    $admin_check = intval($_POST['admin_check']); // 0 for User, 1 for Admin
+    $firstname = $_POST['firstname'];
+    $lastname = $_POST['lastname'];
+    $username    = $_POST['username'];
+    $email       = $_POST['email'];
+    $password    = password_hash($_POST['password'], PASSWORD_BCRYPT);
+    $admin_check = intval($_POST['admin_check']);
 
-    $query = "INSERT INTO users (username, email, password, admin_check) VALUES (?, ?, ?, ?)";
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param("sssi", $username, $email, $password, $admin_check);
+    // Default avatar path if none uploaded
+    // Default avatar path if none uploaded
+    $avatar = '/TrekSmart/assets/default-avatar.png';
+    if (isset($_FILES['profile_picture']) && $_FILES['profile_picture']['error'] == UPLOAD_ERR_OK) {
+        // Build the absolute path on the file system
+        $uploadDir = $_SERVER['DOCUMENT_ROOT'] . '/TrekSmart/uploads/';
+        $fileName  = time() . '_' . basename($_FILES['profile_picture']['name']);
+        $targetPath = $uploadDir . $fileName;
+        if (move_uploaded_file($_FILES['profile_picture']['tmp_name'], $targetPath)) {
+            // Save only the public URL
+            $avatar = '/TrekSmart/uploads/' . $fileName;
+        }
+    }
+
+
+    $query = "INSERT INTO users (firstname, lastname, username, email, password, admin_check, avatar) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    $stmt  = $conn->prepare($query);
+    $stmt->bind_param("sssssis", $firstname, $lastname, $username, $email, $password, $admin_check, $avatar);
 
     if ($stmt->execute()) {
         header("Location: admin_dashboard.php?section=manageUsers");
@@ -36,16 +53,37 @@ if ($action === 'addUser' && $_SERVER['REQUEST_METHOD'] === 'POST') {
  * ✅ EDIT USER
  */
 if ($action === 'editUser' && $_SERVER['REQUEST_METHOD'] === 'POST') {
-    $id = intval($_POST['id']);
-    $username = $_POST['username'];
-    $email = $_POST['email'];
-    $admin_check = intval($_POST['admin_check']);  // This value comes from the dropdown
-    
-    $stmt = $conn->prepare("UPDATE users SET username = ?, email = ?, admin_check = ? WHERE id = ?");
-    $stmt->bind_param("ssii", $username, $email, $admin_check, $id);
-    $query = "UPDATE users SET username = ?, email = ? WHERE id = ?";
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param("ssi", $username, $email, $id);
+    $id          = intval($_POST['id']);
+    $firstname   = $_POST['firstname'];
+    $lastname    = $_POST['lastname'];
+    $username    = $_POST['username'];
+    $email       = $_POST['email'];
+    $admin_check = intval($_POST['admin_check']);
+
+    // Fetch the current avatar
+    $query = "SELECT avatar FROM users WHERE id = ?";
+    $stmt  = $conn->prepare($query);
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    $stmt->bind_result($currentAvatar);
+    $stmt->fetch();
+    $stmt->close();
+
+    $avatar = $currentAvatar; // Default to the existing avatar
+
+    // Process new profile picture upload if provided
+    if (isset($_FILES['profile_picture']) && $_FILES['profile_picture']['error'] == UPLOAD_ERR_OK) {
+        $uploadDir = $_SERVER['DOCUMENT_ROOT'] . '/TrekSmart/uploads/';
+        $fileName   = time() . '_' . basename($_FILES['profile_picture']['name']);
+        $targetPath = $uploadDir . $fileName;
+        if (move_uploaded_file($_FILES['profile_picture']['tmp_name'], $targetPath)) {
+            $avatar = '/TrekSmart/uploads/' . $fileName;
+        }
+    }
+
+    $updateQuery = "UPDATE users SET firstname = ?, lastname = ?, username = ?, email = ?, admin_check = ?, avatar = ? WHERE id = ?";
+    $stmt = $conn->prepare($updateQuery);
+    $stmt->bind_param("ssssisi", $firstname, $lastname, $username, $email, $admin_check, $avatar, $id);
 
     if ($stmt->execute()) {
         header("Location: admin_dashboard.php?section=manageUsers");
@@ -97,7 +135,7 @@ if ($action === 'addPackage' && $_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $query = "INSERT INTO trekking_packages (title, description, duration, difficulty, price, image_path) VALUES (?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($query);
-    $stmt->bind_param("ssisss", $title, $description, $duration, $difficulty, $price, $imagePath);
+    $stmt->bind_param("ssisds", $title, $description, $duration, $difficulty, $price, $imagePath);
 
     if ($stmt->execute()) {
         header("Location: admin_dashboard.php?section=managePackages");
@@ -127,7 +165,7 @@ if ($action === 'editPackage' && $_SERVER['REQUEST_METHOD'] === 'POST') {
             $imagePath = '/TrekSmart/uploads/' . $imageName;
             $query = "UPDATE trekking_packages SET title = ?, description = ?, duration = ?, difficulty = ?, price = ?, image_path = ? WHERE id = ?";
             $stmt = $conn->prepare($query);
-            $stmt->bind_param("ssisssi", $title, $description, $duration, $difficulty, $price, $imagePath, $id);
+            $stmt->bind_param("ssisdsi", $title, $description, $duration, $difficulty, $price, $imagePath, $id);
         }
     } else {
         $query = "UPDATE trekking_packages SET title = ?, description = ?, duration = ?, difficulty = ?, price = ? WHERE id = ?";
@@ -184,7 +222,7 @@ if ($action === 'addBlog' && $_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $query = "INSERT INTO blogs (title, excerpt, content, read_time, image_path) VALUES (?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($query);
-    $stmt->bind_param("sssds", $title, $excerpt, $content, $readTime, $imagePath);
+    $stmt->bind_param("sssis", $title, $excerpt, $content, $readTime, $imagePath);
 
     if ($stmt->execute()) {
         header("Location: admin_dashboard.php?section=manageBlogs");

@@ -125,7 +125,7 @@ if (!$result) {
     <!-- Modal for Package Details -->
     <div id="packageModal" class="modal">
         <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
+            <span class="close" onclick="closeModal('packageModal')">&times;</span>
             <div id="modalBody"></div>
         </div>
     </div>

@@ -101,7 +101,6 @@ function viewDetails(packageId) {
 }
 
 
-
 function closeModal() {
     document.getElementById("packageModal").style.display = "none";
 }
@@ -210,8 +209,10 @@ function openEditBlogModal(id, title, excerpt, content, readTime) {
 
 
 // Function to open the Edit User Modal
-function openEditUserModal(id, username, email, adminCheck) {
+function openEditUserModal(id, firstName, lastName, username, email, adminCheck) {
     document.getElementById('edit_user_id').value = id;
+    document.getElementById('edit_firstname').value = firstName;
+    document.getElementById('edit_lastname').value = lastName;
     document.getElementById('edit_username').value = username;
     document.getElementById('edit_email').value = email;
     document.getElementById('edit_admin_check').value = adminCheck;

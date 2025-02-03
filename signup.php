@@ -14,6 +14,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } elseif (empty($username) || strlen($username) < 3) {
         $error = "Username must be at least 3 characters long.";
     } else {
+        $avatar = '/TrekSmart/assets/default-avatar.png'; 
+        if (isset($_FILES['profile_picture']) && $_FILES['profile_picture']['error'] == UPLOAD_ERR_OK) {
+            // Define your upload directory (ensure this directory exists and is writable)
+            $uploadDir = '/TrekSmart/uploads/';
+            // Create a unique filename
+            $fileName = time() . '_' . basename($_FILES['profile_picture']['name']);
+            $targetPath = $uploadDir . $fileName;
+    
+            if (move_uploaded_file($_FILES['profile_picture']['tmp_name'], $targetPath)) {
+                $avatar = '/' . $targetPath;
+            }
+        }
         // Hash the password
         $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
 
@@ -29,9 +41,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $error = "Email or username already exists. Please choose another.";
             } else {
                 // Insert new user
-                $query = "INSERT INTO users (firstname, lastname, email, password, username) VALUES (?, ?, ?, ?, ?)";
+                $query = "INSERT INTO users (firstname, lastname, email, password, username, avatar) VALUES (?, ?, ?, ?, ?, ?)";
                 $stmt = $conn->prepare($query);
-                $stmt->bind_param("sssss", $firstname, $lastname, $email, $hashedPassword, $username);
+                $stmt->bind_param("ssssss", $firstname, $lastname, $email, $hashedPassword, $username, $avatar);
 
                 if ($stmt->execute()) {
                     // Redirect to login page after successful signup
@@ -62,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php if (isset($error)): ?>
                 <p class="error"><?php echo $error; ?></p>
             <?php endif; ?>
-            <form action="signup.php" method="POST">
+            <form action="signup.php" method="POST" enctype="multipart/form-data">
                 <!-- Row for First and Last Name -->
                 <div class="form-group">
                     <input type="text" id="firstname" name="firstname" placeholder="First Name" required>
@@ -82,6 +94,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <input type="password" id="password" name="password" placeholder="Enter your password" required>
                 </div>
                 <small id="passwordHelp" class="helper-text"></small>
+                <div class="form-group">
+                    <label for="profile_picture">Profile Picture</label>
+                    <input type="file" id="profile_picture" name="profile_picture" accept="image/*">
+                </div>
                 <!-- Checkbox -->
                 <div class="checkbox-container">
                     <input type="checkbox" id="terms" required>
