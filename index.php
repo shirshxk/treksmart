@@ -21,53 +21,45 @@ include 'header.php';
                     <h2>What We Offer</h2>
                     <p>Explore our premium services designed for your adventures.</p>
                     <div class="offer-items">
-                        <!-- Item 1 -->
+                    <div class="offer-item">
+                            <i class="fas fa-fingerprint"></i>
+                            <h3>Unique Trek Packages</h3>
+                            <p>Explore specially curated trekking packages for diverse preferences and adventures.</p>
+                        </div>
                         <div class="offer-item">
                             <i class="fas fa-mountain"></i>
-                            <h3>Adventure Trekking</h3>
-                            <p>Experience breathtaking trekking routes with our expert guides.</p>
+                            <h3>Trekking Bookings</h3>
+                            <p>Seamlessly book, view, and edit trekking adventures for exclusive destinations.</p>
                         </div>
-                        <!-- Item 2 -->
                         <div class="offer-item">
-                            <i class="fas fa-campground"></i>
-                            <h3>Camping</h3>
-                            <p>Immerse yourself in nature with fully equipped, serene camping experiences.</p>
-                        </div>
-                        <!-- Item 3 -->
-                        <div class="offer-item">
-                            <i class="fas fa-compass"></i>
-                            <h3>Navigation Support</h3>
-                            <p>Top-notch navigation tools and real-time support for all expeditions.</p>
-                        </div>
-                        <!-- Item 4 -->
-                        <div class="offer-item">
-                            <i class="fas fa-hiking"></i>
+                            <i class="fas fa-handshake-angle"></i>
                             <h3>Guided Tours</h3>
                             <p>Expert-led guided tours for a safe and enriching adventure.</p>
                         </div>
-                        <!-- Item 5 -->
                         <div class="offer-item">
-                            <i class="fas fa-hiking"></i>
-                            <h3>Guided Tours</h3>
-                            <p>Expert-led guided tours for a safe and enriching adventure.</p>
+                            <i class="fas fa-table"></i>
+                            <h3>User Dashboard</h3>
+                            <p>Manage your trekking bookings, preferences, and profile in one place.</p>
                         </div>
-                        <!-- Item 6 -->
                         <div class="offer-item">
-                            <i class="fas fa-hiking"></i>
-                            <h3>Guided Tours</h3>
-                            <p>Expert-led guided tours for a safe and enriching adventure.</p>
+                            <i class="fas fa-phone"></i>
+                            <h3>Contact Support</h3>
+                            <p>Easy connection with the TrekSmart team for inquiries, support, or custom trekking plans.</p>
                         </div>
-                        <!-- Item 7 -->
                         <div class="offer-item">
-                            <i class="fas fa-hiking"></i>
-                            <h3>Guided Tours</h3>
-                            <p>Expert-led guided tours for a safe and enriching adventure.</p>
+                            <i class="fas fa-money-bill"></i>
+                            <h3>No Pre-Payment</h3>
+                            <p>Easy onsite cash on delivery payment for hassle-free transactions.</p>
                         </div>
-                        <!-- Item 8 -->
                         <div class="offer-item">
-                            <i class="fas fa-hiking"></i>
-                            <h3>Guided Tours</h3>
-                            <p>Expert-led guided tours for a safe and enriching adventure.</p>
+                            <i class="fas fa-square-rss"></i>
+                            <h3>Blog Updates</h3>
+                            <p>Explore detailed trekking guides, tips, and stories to inspire your journey.</p>
+                        </div>
+                        <div class="offer-item">
+                            <i class="fas fa-star"></i>
+                            <h3>Quality Service</h3>
+                            <p>Enjoy top-notch services ensuring satisfaction and memorable trekking experiences.</p>
                         </div>
                     </div>
                 </div>
