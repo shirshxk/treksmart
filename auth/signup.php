@@ -20,13 +20,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Set a default avatar, then update if a profile picture is uploaded
         $avatar = '/TrekSmart/assets/image/default-avatar.png';
         if (isset($_FILES['profile_picture']) && $_FILES['profile_picture']['error'] == UPLOAD_ERR_OK) {
-            $uploadDir  = '/TrekSmart/uploads/';
-            $fileName   = time() . '_' . basename($_FILES['profile_picture']['name']);
+            // Build the absolute file system path using DOCUMENT_ROOT
+            $uploadDir = $_SERVER['DOCUMENT_ROOT'] . '/TrekSmart/uploads/';
+            // Create a unique filename
+            $fileName = time() . '_' . basename($_FILES['profile_picture']['name']);
             $targetPath = $uploadDir . $fileName;
+            
+            // Attempt to move the uploaded file
             if (move_uploaded_file($_FILES['profile_picture']['tmp_name'], $targetPath)) {
-                $avatar = '/' . $targetPath;
+                // Store the public URL (relative to your web root)
+                $avatar = '/TrekSmart/uploads/' . $fileName;
             }
         }
+
         // Hash the password using BCRYPT
         $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
 
