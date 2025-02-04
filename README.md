@@ -1,5 +1,5 @@
 # TrekSmart - Adventure Booking Web Application
-
+![alt text](https://github.com/shirshxk/treksmart/blob/main/assets/logo/logowhite.png)
 ## Overview
 
 TrekSmart is a comprehensive web application designed for adventure enthusiasts to browse, book, and manage trekking adventures. Utilizing a stack of HTML, CSS, JavaScript, PHP, and MySQL, it provides a secure and dynamic platform with a responsive user interface.
