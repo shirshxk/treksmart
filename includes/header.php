@@ -4,6 +4,8 @@ require 'db.php';
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+// Determine the current page's filename
+$currentPage = basename($_SERVER['PHP_SELF']);
 ?>
 <!-- Navigation Bar -->
 <nav>
@@ -12,11 +14,21 @@ if (session_status() === PHP_SESSION_NONE) {
     </div>
     <div class="nav-wrapper">
         <ul>
-            <li><a href="/TrekSmart/public/index.php">Home</a></li>
-            <li><a href="/TrekSmart/public/about.php">About</a></li>
-            <li><a href="/TrekSmart/public/trekking.php">Trekking</a></li>
-            <li><a href="/TrekSmart/public/blogs.php">Blog</a></li>
-            <li><a href="/TrekSmart/public/contact.php">Contact</a></li>
+            <li>
+                <a href="/TrekSmart/public/index.php" class="<?= ($currentPage == 'index.php') ? 'active' : '' ?>">Home</a>
+            </li>
+            <li>
+                <a href="/TrekSmart/public/about.php" class="<?= ($currentPage == 'about.php') ? 'active' : '' ?>">About</a>
+            </li>
+            <li>
+                <a href="/TrekSmart/public/trekking.php" class="<?= ($currentPage == 'trekking.php') ? 'active' : '' ?>">Trekking</a>
+            </li>
+            <li>
+                <a href="/TrekSmart/public/blogs.php" class="<?= ($currentPage == 'blogs.php') ? 'active' : '' ?>">Blog</a>
+            </li>
+            <li>
+                <a href="/TrekSmart/public/contact.php" class="<?= ($currentPage == 'contact.php') ? 'active' : '' ?>">Contact</a>
+            </li>
             <?php if (isset($_SESSION['username'])): ?>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle">

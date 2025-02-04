@@ -121,7 +121,13 @@ nav ul li a::after {
     width: 0;
     height: 2px;
     background-color: #0cf46c;
-    transition: width 0.3s ease-in-out, left 0.3s ease-in-out;
+    transition: width 0.3s 
+    ease-in-out, left 0.3s ease-in-out;
+}
+
+nav .nav-wrapper ul li a.active::after {
+    width: 100%;
+    left: 0;
 }
 
 nav ul li a:hover::after {
