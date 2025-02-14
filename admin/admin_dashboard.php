@@ -229,7 +229,7 @@ $bookings = $conn->query("SELECT b.id, b.trek_start_date, b.special_requests, b.
         </div>
     </main>
 
-    <!-- Add/Edit User Modals -->
+    <!-- Add/Edit User Modal -->
     <div id="addUserModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal('addUserModal')">&times;</span>
