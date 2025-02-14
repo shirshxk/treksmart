@@ -1,6 +1,5 @@
 <?php
 session_start();
->>>>>>> ea3dcc8 (update)
 // Start of admin dashboard page: Fetch data and set active section.
 require '../includes/db.php';
 $activeSection = $_GET['section'] ?? 'manageUsers';
@@ -8,7 +7,6 @@ $activeSection = $_GET['section'] ?? 'manageUsers';
 // Check if an admin is logged in; if not, redirect to login.
 if (!isset($_SESSION['user_id']) || $_SESSION['admin_check'] != 1) {
     header("Location: ../auth/login.php");
->>>>>>> ea3dcc8 (update)
     exit;
 }
 
