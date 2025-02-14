@@ -26,3 +26,8 @@
 <!-- Link to the JavaScript file -->
 <script src="/TrekSmart/assets/JS/script.js"></script>
 </html>
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> ea3dcc8 (update)

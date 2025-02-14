@@ -1,10 +1,18 @@
 <?php
+<<<<<<< HEAD
+=======
+session_start();
+>>>>>>> ea3dcc8 (update)
 // Include the database connection file
 require '../includes/db.php';
 
 // Check if an admin user is logged in; if not, redirect to the admin login page.
 if (!isset($_SESSION['user_id']) || $_SESSION['admin_check'] != 1) {
+<<<<<<< HEAD
     header("Location: admin_login.php");
+=======
+    header("Location: ../auth/login.php");
+>>>>>>> ea3dcc8 (update)
     exit;
 }
 
