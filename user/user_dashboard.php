@@ -1,4 +1,5 @@
 <?php
+session_start();
 // Include the database connection file from the includes folder
 require '../includes/db.php';
 
